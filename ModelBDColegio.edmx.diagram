@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="648c1751f89f4921b4652abd02914af4" Name="Diagram1">
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblAlumno" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblAsignatura" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblBimestre" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblDocente" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblGrado" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblGradoInstruccion" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdProyectoColegioModel.tblNotas" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblAlumno__codiG__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblAlumno__idGI__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblNotas__Compor__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblAsigna__idDoc__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblAsignat__idGI__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblNotas__codiAs__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblNotas__idBime__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="bdProyectoColegioModel.FK__tblGrado__idGI__182C9B23" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

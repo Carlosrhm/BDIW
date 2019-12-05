@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bdProyectoColegioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAlumno">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="nombresAlumno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidoPaternoAlumno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="apellidoMaternoAlumno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="genero" Type="char" MaxLength="1" />
+          <Property Name="Apoderado" Type="varchar" MaxLength="100" />
+          <Property Name="fechaNacimiento" Type="date" />
+          <Property Name="codiGrado" Type="char" MaxLength="4" />
+          <Property Name="idGI" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAsignatura">
+          <Key>
+            <PropertyRef Name="codiAsignatura" />
+          </Key>
+          <Property Name="codiAsignatura" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="nomAsignatura" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="descAsignatura" Type="varchar" MaxLength="100" />
+          <Property Name="idDocente" Type="tinyint" />
+          <Property Name="idGI" Type="varchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="tblBimestre">
+          <Key>
+            <PropertyRef Name="idBimestre" />
+          </Key>
+          <Property Name="idBimestre" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="nombreBimestre" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblDocente">
+          <Key>
+            <PropertyRef Name="idDocente" />
+          </Key>
+          <Property Name="idDocente" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombresDocente" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="apellidosDocente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="tblGrado">
+          <Key>
+            <PropertyRef Name="codiGrado" />
+          </Key>
+          <Property Name="codiGrado" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="grado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="idGI" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblGradoInstruccion">
+          <Key>
+            <PropertyRef Name="idGI" />
+          </Key>
+          <Property Name="idGI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="nombreGI" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="descripcionGI" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tblNotas">
+          <Key>
+            <PropertyRef Name="idRegistro" />
+          </Key>
+          <Property Name="idRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="idBimestre" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="codiAsignatura" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="criterio1" Type="int" Nullable="false" />
+          <Property Name="criterio2" Type="int" Nullable="false" />
+          <Property Name="criterio3" Type="int" Nullable="false" />
+          <Property Name="criterio4" Type="int" Nullable="false" />
+          <Property Name="Promedio" Type="int" Nullable="false" />
+          <Property Name="Comportamiento" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblAlumno__codiG__1B0907CE">
+          <End Role="tblGrado" Type="Self.tblGrado" Multiplicity="0..1" />
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGrado">
+              <PropertyRef Name="codiGrado" />
+            </Principal>
+            <Dependent Role="tblAlumno">
+              <PropertyRef Name="codiGrado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAlumno__idGI__1BFD2C07">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="1" />
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblAlumno">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAsigna__idDoc__145C0A3F">
+          <End Role="tblDocente" Type="Self.tblDocente" Multiplicity="0..1" />
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDocente">
+              <PropertyRef Name="idDocente" />
+            </Principal>
+            <Dependent Role="tblAsignatura">
+              <PropertyRef Name="idDocente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAsignat__idGI__15502E78">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="0..1" />
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblAsignatura">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblGrado__idGI__182C9B23">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="1" />
+          <End Role="tblGrado" Type="Self.tblGrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblGrado">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__codiAs__4D94879B">
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAsignatura">
+              <PropertyRef Name="codiAsignatura" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="codiAsignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__Compor__4BAC3F29">
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAlumno">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="DNI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__idBime__4CA06362">
+          <End Role="tblBimestre" Type="Self.tblBimestre" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBimestre">
+              <PropertyRef Name="idBimestre" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="idBimestre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdProyectoColegioModelStoreContainer">
+          <EntitySet Name="tblAlumno" EntityType="Self.tblAlumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAsignatura" EntityType="Self.tblAsignatura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBimestre" EntityType="Self.tblBimestre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDocente" EntityType="Self.tblDocente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGrado" EntityType="Self.tblGrado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGradoInstruccion" EntityType="Self.tblGradoInstruccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblNotas" EntityType="Self.tblNotas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblAlumno__codiG__1B0907CE" Association="Self.FK__tblAlumno__codiG__1B0907CE">
+            <End Role="tblGrado" EntitySet="tblGrado" />
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAlumno__idGI__1BFD2C07" Association="Self.FK__tblAlumno__idGI__1BFD2C07">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAsigna__idDoc__145C0A3F" Association="Self.FK__tblAsigna__idDoc__145C0A3F">
+            <End Role="tblDocente" EntitySet="tblDocente" />
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAsignat__idGI__15502E78" Association="Self.FK__tblAsignat__idGI__15502E78">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblGrado__idGI__182C9B23" Association="Self.FK__tblGrado__idGI__182C9B23">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblGrado" EntitySet="tblGrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__codiAs__4D94879B" Association="Self.FK__tblNotas__codiAs__4D94879B">
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__Compor__4BAC3F29" Association="Self.FK__tblNotas__Compor__4BAC3F29">
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__idBime__4CA06362" Association="Self.FK__tblNotas__idBime__4CA06362">
+            <End Role="tblBimestre" EntitySet="tblBimestre" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bdProyectoColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAlumno">
+          <Key>
+            <PropertyRef Name="DNI" />
+          </Key>
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombresAlumno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidoPaternoAlumno" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidoMaternoAlumno" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="genero" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Apoderado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="codiGrado" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="idGI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblGrado" Relationship="Self.FK__tblAlumno__codiG__1B0907CE" FromRole="tblAlumno" ToRole="tblGrado" />
+          <NavigationProperty Name="tblGradoInstruccion" Relationship="Self.FK__tblAlumno__idGI__1BFD2C07" FromRole="tblAlumno" ToRole="tblGradoInstruccion" />
+          <NavigationProperty Name="tblNotas" Relationship="Self.FK__tblNotas__Compor__4BAC3F29" FromRole="tblAlumno" ToRole="tblNotas" />
+        </EntityType>
+        <EntityType Name="tblAsignatura">
+          <Key>
+            <PropertyRef Name="codiAsignatura" />
+          </Key>
+          <Property Name="codiAsignatura" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nomAsignatura" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descAsignatura" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idDocente" Type="Byte" />
+          <Property Name="idGI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblDocente" Relationship="Self.FK__tblAsigna__idDoc__145C0A3F" FromRole="tblAsignatura" ToRole="tblDocente" />
+          <NavigationProperty Name="tblGradoInstruccion" Relationship="Self.FK__tblAsignat__idGI__15502E78" FromRole="tblAsignatura" ToRole="tblGradoInstruccion" />
+          <NavigationProperty Name="tblNotas" Relationship="Self.FK__tblNotas__codiAs__4D94879B" FromRole="tblAsignatura" ToRole="tblNotas" />
+        </EntityType>
+        <EntityType Name="tblBimestre">
+          <Key>
+            <PropertyRef Name="idBimestre" />
+          </Key>
+          <Property Name="idBimestre" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nombreBimestre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblNotas" Relationship="Self.FK__tblNotas__idBime__4CA06362" FromRole="tblBimestre" ToRole="tblNotas" />
+        </EntityType>
+        <EntityType Name="tblDocente">
+          <Key>
+            <PropertyRef Name="idDocente" />
+          </Key>
+          <Property Name="idDocente" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombresDocente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidosDocente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAsignatura" Relationship="Self.FK__tblAsigna__idDoc__145C0A3F" FromRole="tblDocente" ToRole="tblAsignatura" />
+        </EntityType>
+        <EntityType Name="tblGrado">
+          <Key>
+            <PropertyRef Name="codiGrado" />
+          </Key>
+          <Property Name="codiGrado" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="grado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idGI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblAlumno" Relationship="Self.FK__tblAlumno__codiG__1B0907CE" FromRole="tblGrado" ToRole="tblAlumno" />
+          <NavigationProperty Name="tblGradoInstruccion" Relationship="Self.FK__tblGrado__idGI__182C9B23" FromRole="tblGrado" ToRole="tblGradoInstruccion" />
+        </EntityType>
+        <EntityType Name="tblGradoInstruccion">
+          <Key>
+            <PropertyRef Name="idGI" />
+          </Key>
+          <Property Name="idGI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombreGI" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcionGI" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAlumno" Relationship="Self.FK__tblAlumno__idGI__1BFD2C07" FromRole="tblGradoInstruccion" ToRole="tblAlumno" />
+          <NavigationProperty Name="tblAsignatura" Relationship="Self.FK__tblAsignat__idGI__15502E78" FromRole="tblGradoInstruccion" ToRole="tblAsignatura" />
+          <NavigationProperty Name="tblGrado" Relationship="Self.FK__tblGrado__idGI__182C9B23" FromRole="tblGradoInstruccion" ToRole="tblGrado" />
+        </EntityType>
+        <EntityType Name="tblNotas">
+          <Key>
+            <PropertyRef Name="idRegistro" />
+          </Key>
+          <Property Name="idRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idBimestre" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="codiAsignatura" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="criterio1" Type="Int32" Nullable="false" />
+          <Property Name="criterio2" Type="Int32" Nullable="false" />
+          <Property Name="criterio3" Type="Int32" Nullable="false" />
+          <Property Name="criterio4" Type="Int32" Nullable="false" />
+          <Property Name="Promedio" Type="Int32" Nullable="false" />
+          <Property Name="Comportamiento" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblAlumno" Relationship="Self.FK__tblNotas__Compor__4BAC3F29" FromRole="tblNotas" ToRole="tblAlumno" />
+          <NavigationProperty Name="tblAsignatura" Relationship="Self.FK__tblNotas__codiAs__4D94879B" FromRole="tblNotas" ToRole="tblAsignatura" />
+          <NavigationProperty Name="tblBimestre" Relationship="Self.FK__tblNotas__idBime__4CA06362" FromRole="tblNotas" ToRole="tblBimestre" />
+        </EntityType>
+        <Association Name="FK__tblAlumno__codiG__1B0907CE">
+          <End Role="tblGrado" Type="Self.tblGrado" Multiplicity="0..1" />
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGrado">
+              <PropertyRef Name="codiGrado" />
+            </Principal>
+            <Dependent Role="tblAlumno">
+              <PropertyRef Name="codiGrado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAlumno__idGI__1BFD2C07">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="1" />
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblAlumno">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__Compor__4BAC3F29">
+          <End Role="tblAlumno" Type="Self.tblAlumno" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAlumno">
+              <PropertyRef Name="DNI" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="DNI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAsigna__idDoc__145C0A3F">
+          <End Role="tblDocente" Type="Self.tblDocente" Multiplicity="0..1" />
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDocente">
+              <PropertyRef Name="idDocente" />
+            </Principal>
+            <Dependent Role="tblAsignatura">
+              <PropertyRef Name="idDocente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblAsignat__idGI__15502E78">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="0..1" />
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblAsignatura">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__codiAs__4D94879B">
+          <End Role="tblAsignatura" Type="Self.tblAsignatura" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAsignatura">
+              <PropertyRef Name="codiAsignatura" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="codiAsignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblNotas__idBime__4CA06362">
+          <End Role="tblBimestre" Type="Self.tblBimestre" Multiplicity="1" />
+          <End Role="tblNotas" Type="Self.tblNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBimestre">
+              <PropertyRef Name="idBimestre" />
+            </Principal>
+            <Dependent Role="tblNotas">
+              <PropertyRef Name="idBimestre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblGrado__idGI__182C9B23">
+          <End Role="tblGradoInstruccion" Type="Self.tblGradoInstruccion" Multiplicity="1" />
+          <End Role="tblGrado" Type="Self.tblGrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGradoInstruccion">
+              <PropertyRef Name="idGI" />
+            </Principal>
+            <Dependent Role="tblGrado">
+              <PropertyRef Name="idGI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdProyectoColegioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAlumno" EntityType="Self.tblAlumno" />
+          <EntitySet Name="tblAsignatura" EntityType="Self.tblAsignatura" />
+          <EntitySet Name="tblBimestre" EntityType="Self.tblBimestre" />
+          <EntitySet Name="tblDocente" EntityType="Self.tblDocente" />
+          <EntitySet Name="tblGrado" EntityType="Self.tblGrado" />
+          <EntitySet Name="tblGradoInstruccion" EntityType="Self.tblGradoInstruccion" />
+          <EntitySet Name="tblNotas" EntityType="Self.tblNotas" />
+          <AssociationSet Name="FK__tblAlumno__codiG__1B0907CE" Association="Self.FK__tblAlumno__codiG__1B0907CE">
+            <End Role="tblGrado" EntitySet="tblGrado" />
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAlumno__idGI__1BFD2C07" Association="Self.FK__tblAlumno__idGI__1BFD2C07">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__Compor__4BAC3F29" Association="Self.FK__tblNotas__Compor__4BAC3F29">
+            <End Role="tblAlumno" EntitySet="tblAlumno" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAsigna__idDoc__145C0A3F" Association="Self.FK__tblAsigna__idDoc__145C0A3F">
+            <End Role="tblDocente" EntitySet="tblDocente" />
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblAsignat__idGI__15502E78" Association="Self.FK__tblAsignat__idGI__15502E78">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__codiAs__4D94879B" Association="Self.FK__tblNotas__codiAs__4D94879B">
+            <End Role="tblAsignatura" EntitySet="tblAsignatura" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblNotas__idBime__4CA06362" Association="Self.FK__tblNotas__idBime__4CA06362">
+            <End Role="tblBimestre" EntitySet="tblBimestre" />
+            <End Role="tblNotas" EntitySet="tblNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblGrado__idGI__182C9B23" Association="Self.FK__tblGrado__idGI__182C9B23">
+            <End Role="tblGradoInstruccion" EntitySet="tblGradoInstruccion" />
+            <End Role="tblGrado" EntitySet="tblGrado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bdProyectoColegioModelStoreContainer" CdmEntityContainer="bdProyectoColegioEntities">
+          <EntitySetMapping Name="tblAlumno">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblAlumno">
+              <MappingFragment StoreEntitySet="tblAlumno">
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="nombresAlumno" ColumnName="nombresAlumno" />
+                <ScalarProperty Name="apellidoPaternoAlumno" ColumnName="apellidoPaternoAlumno" />
+                <ScalarProperty Name="apellidoMaternoAlumno" ColumnName="apellidoMaternoAlumno" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="Apoderado" ColumnName="Apoderado" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="codiGrado" ColumnName="codiGrado" />
+                <ScalarProperty Name="idGI" ColumnName="idGI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAsignatura">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblAsignatura">
+              <MappingFragment StoreEntitySet="tblAsignatura">
+                <ScalarProperty Name="codiAsignatura" ColumnName="codiAsignatura" />
+                <ScalarProperty Name="nomAsignatura" ColumnName="nomAsignatura" />
+                <ScalarProperty Name="descAsignatura" ColumnName="descAsignatura" />
+                <ScalarProperty Name="idDocente" ColumnName="idDocente" />
+                <ScalarProperty Name="idGI" ColumnName="idGI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBimestre">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblBimestre">
+              <MappingFragment StoreEntitySet="tblBimestre">
+                <ScalarProperty Name="idBimestre" ColumnName="idBimestre" />
+                <ScalarProperty Name="nombreBimestre" ColumnName="nombreBimestre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDocente">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblDocente">
+              <MappingFragment StoreEntitySet="tblDocente">
+                <ScalarProperty Name="idDocente" ColumnName="idDocente" />
+                <ScalarProperty Name="nombresDocente" ColumnName="nombresDocente" />
+                <ScalarProperty Name="apellidosDocente" ColumnName="apellidosDocente" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGrado">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblGrado">
+              <MappingFragment StoreEntitySet="tblGrado">
+                <ScalarProperty Name="codiGrado" ColumnName="codiGrado" />
+                <ScalarProperty Name="grado" ColumnName="grado" />
+                <ScalarProperty Name="idGI" ColumnName="idGI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGradoInstruccion">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblGradoInstruccion">
+              <MappingFragment StoreEntitySet="tblGradoInstruccion">
+                <ScalarProperty Name="idGI" ColumnName="idGI" />
+                <ScalarProperty Name="nombreGI" ColumnName="nombreGI" />
+                <ScalarProperty Name="descripcionGI" ColumnName="descripcionGI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblNotas">
+            <EntityTypeMapping TypeName="bdProyectoColegioModel.tblNotas">
+              <MappingFragment StoreEntitySet="tblNotas">
+                <ScalarProperty Name="idRegistro" ColumnName="idRegistro" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="idBimestre" ColumnName="idBimestre" />
+                <ScalarProperty Name="codiAsignatura" ColumnName="codiAsignatura" />
+                <ScalarProperty Name="criterio1" ColumnName="criterio1" />
+                <ScalarProperty Name="criterio2" ColumnName="criterio2" />
+                <ScalarProperty Name="criterio3" ColumnName="criterio3" />
+                <ScalarProperty Name="criterio4" ColumnName="criterio4" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Comportamiento" ColumnName="Comportamiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
